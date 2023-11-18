@@ -13,7 +13,8 @@ reader = easyocr.Reader(['en'])
 
 #https://colab.research.google.com/drive/1-MKuJNyAiUpeVZtf98ApLSzp6KTFGz-_#scrollTo=Je6ka6rrx8Wx&uniqifier=1
 
-# idcard@idcard-405217.iam.gserviceaccount.com 
+
+# idcard@idcard-405217.iam.gserviceaccount.com
 
 # Function to append a list as a row to Google Sheet
 def append_to_google_sheet(data):
@@ -103,12 +104,13 @@ def check_empty_return_value(arr):
     if type(arr[0]) == str:  # ['7376212al114'] -> '7' == str
         return arr[0]
     arr = arr[0]  # due to the first index is the matched index in the group of regex
+    if arr ==[]:
+        return ""
     # for i in name:
     #     if i!="":
     #         name=i
     #         break
-    return [name for name in arr if name != ""][
-        0]  # shorthand for loop that stores result in list then print the 0th index
+    return [name for name in arr if name != ""][0]  # shorthand for loop that stores result in list then print the 0th index
 
 
 def front_text_classification(image_front_text):
@@ -171,7 +173,7 @@ def back_text_classification(image_back_text):
                            "Official Email": "", "Address": ""}
 
     # ------------------------------- Date Of Birth ----------------------------
-    temp_dob = re.findall(r'D.O.B\n(.*)|DOB :\n(.*)|D.O.B :\n(.*)|D.O.B.\n:\n(.*)|D.OB.*\n(.*)', image_back_text)
+    temp_dob = re.findall(r'D.O.B\n(.*)|DOB :\n(.*)|D.O.B :\n(.*)|D.O.B.\n:\n(.*)|D.OB.*\n(.*)|\d{2}-\d{2}-\d{4}', image_back_text)
     back_details_result["Date Of Birth"] = check_empty_return_value(temp_dob)
 
     # ------------------------------- Blood Group ------------------------------
@@ -212,7 +214,7 @@ Address        :
 if __name__ == "__main__":
     # to change the title and icon
     st.set_page_config(page_title="ExtraID", page_icon="🪪", layout="wide", initial_sidebar_state="collapsed")
-    st.markdown("<h1 style='text-align: center;'>Extract the data in ID card 🪪</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center;'>Extract the data 📃 From ID card 🪪</h1>", unsafe_allow_html=True)
     # st.title("Extract the data in ID card 🪪")  # like h1 tag
     col1, col2 = st.columns([0.5, 0.5])
     with col1:
@@ -251,3 +253,17 @@ if __name__ == "__main__":
             full_details_push_to_gsheet += list(front_details_result.values()) + list(back_details_result.values())
             print(full_details_push_to_gsheet)
             append_to_google_sheet(full_details_push_to_gsheet)
+
+    # center the button
+    col1, col2, col3, col4, col5 = st.columns(5)
+
+    with col1:
+        pass
+    with col2:
+        pass
+    with col4:
+        pass
+    with col5:
+        pass
+    with col3:
+        st.link_button("See all the data here 👉 ","https://docs.google.com/spreadsheets/d/183D8pChQlxFH1Km21KEke5olm-BmVVDgA0UFLxiY0j4/edit?usp=sharing")
