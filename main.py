@@ -42,7 +42,7 @@ def easyocr_predicted(img):
         text = detection[1]
         # print(top_left,bottom_right)
         img = cv2.rectangle(img, top_left, bottom_right, (0, 255, 0), 3)
-        img = cv2.putText(img, text, top_left, font, 5, (255, 0, 0), 5, cv2.LINE_AA)
+        img = cv2.putText(img, text, top_left, font, 5, (0, 0, 255), 5, cv2.LINE_AA)
     # cv2_imshow(img)
     return image_text, img
 
@@ -223,13 +223,14 @@ if __name__ == "__main__":
         if image_front:
             image_front = Image.open(image_front)
             image_front = np.array(image_front)
-            image_front_text, img_front_pred = main_ocr(image_front)
-            img_front_pred = cv2.cvtColor(img_front_pred, cv2.COLOR_BGR2RGB)
-            st.image(img_front_pred)
-            st.subheader("Extracted Text of Front Side")
-            st.text(image_front_text)
-            st.subheader("Classified Text of Front Side")
-            front_show_text, front_details_result = front_text_classification(image_front_text)
+            with st.spinner('\t\t\t\t\tWorking on it 🧑‍💻...'):
+                image_front_text, img_front_pred = main_ocr(image_front)
+                img_front_pred = cv2.cvtColor(img_front_pred, cv2.COLOR_BGR2RGB)
+                st.image(img_front_pred)
+                st.subheader("Extracted Text of Front Side")
+                st.text(image_front_text)
+                st.subheader("Classified Text of Front Side")
+                front_show_text, front_details_result = front_text_classification(image_front_text)
             st.code(front_show_text)
 
 
@@ -240,13 +241,14 @@ if __name__ == "__main__":
         if image_back:
             image_back = Image.open(image_back)
             image_back = np.array(image_back)
-            image_back_text, img_back_pred = main_ocr(image_back)
-            img_back_pred = cv2.cvtColor(img_back_pred,cv2.COLOR_BGR2RGB)
-            st.image(img_back_pred)
-            st.subheader("Extracted Text of Back Side")
-            st.text(image_back_text)
-            st.subheader("Classified Text of Back Side")
-            back_show_text, back_details_result = back_text_classification(image_back_text)
+            with st.spinner('\t\t\t\t\tWorking on it 🧑‍💻...'):
+                image_back_text, img_back_pred = main_ocr(image_back)
+                img_back_pred = cv2.cvtColor(img_back_pred,cv2.COLOR_BGR2RGB)
+                st.image(img_back_pred)
+                st.subheader("Extracted Text of Back Side")
+                st.text(image_back_text)
+                st.subheader("Classified Text of Back Side")
+                back_show_text, back_details_result = back_text_classification(image_back_text)
             st.code(back_show_text)
 
             #sending the data to the gsheet
