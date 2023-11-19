@@ -4,13 +4,6 @@ This Project is All about extracting the content from the ID card which can be u
 My Flow of this project 
 
 
-```mermaid
-graph TD;
-Image --> Website;
- Pillow image --> opencv;
-EasyOCR--> extracted information ;
- again OCR for flipped text (90deg clock or counter clock wise) --> Extracted Information;
-RegEX (Customised one for our clg - bitsathy) --> classified output;
- classified output--> google sheets (with timestamp);
 ```
-
+Image --> Website --> Pillow image --> opencv --> EasyOCR--> extracted information --> again OCR for flipped text (90deg clock or counter clock wise) --> Extracted Information --> RegEX (Customised one for our clg - bitsathy) --> classified output --> google sheets (with timestamp)
+```
